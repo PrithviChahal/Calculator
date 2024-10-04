@@ -1,5 +1,7 @@
 package com.example.calculator
 
+
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +14,7 @@ class CalculatorViewModel: ViewModel() {
     private val _equationText=MutableLiveData("")
     val equationText: LiveData<String> = _equationText
 
-    private val _resultText=MutableLiveData("")
+    private val _resultText=MutableLiveData("0")
     val resultText: LiveData<String> = _resultText
 
     fun onButtonClick(btn:String){
@@ -21,7 +23,7 @@ class CalculatorViewModel: ViewModel() {
         _equationText.value?.let{
             if(btn=="Ac"){
                 _equationText.value=""
-                _resultText.value=""
+                _resultText.value="0"
                 return
             }
 
@@ -34,13 +36,13 @@ class CalculatorViewModel: ViewModel() {
             }
 
             if(btn=="="){
-                _equationText.value= _resultText.value
+                _equationText.value = _resultText.value
                 return
             }
 
             _equationText.value = it+btn
 
-//            calculate result
+//
                try {
                   _resultText.value= calculatorResult(_equationText.value.toString())
                }catch (_:Exception){}
@@ -53,7 +55,8 @@ class CalculatorViewModel: ViewModel() {
         context.optimizationLevel= -1
         val scriptable: Scriptable = context.initStandardObjects()
        var finalResult= context.evaluateString(scriptable,equation,"Javascript",1,null).toString()
-        finalResult= finalResult.replace(".0","")
+       if (finalResult.endsWith(".0")){
+           finalResult= finalResult.replace(".0","")}
         return finalResult
     }
 }

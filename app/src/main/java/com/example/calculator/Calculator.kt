@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
+
 val buttonList= listOf(
     "C","(",")","/",
     "7","8","9","*",
@@ -38,7 +39,7 @@ val buttonList= listOf(
 
 
 @Composable
-fun Calculator(modifier: Modifier=Modifier,viewModel: CalculatorViewModel){
+fun Calculator(modifier:Modifier =Modifier, viewModel: CalculatorViewModel){
 
     val equationText= viewModel.equationText.observeAsState()
     val resultText= viewModel.resultText.observeAsState()
@@ -66,7 +67,7 @@ fun Calculator(modifier: Modifier=Modifier,viewModel: CalculatorViewModel){
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            LazyVerticalGrid(columns = GridCells.Fixed(3),){
+            LazyVerticalGrid(columns = GridCells.Fixed(4),){
                 items(buttonList){
                     CalculatorButton(btn = it, onClick = {
                         viewModel.onButtonClick(it)
@@ -80,14 +81,14 @@ fun Calculator(modifier: Modifier=Modifier,viewModel: CalculatorViewModel){
 @Composable
 
 fun CalculatorButton(btn:String, onClick:()->Unit){
-    Box(modifier=Modifier.padding(10.dp)){
+    Box(modifier=Modifier.padding(8.dp)){
         FloatingActionButton(onClick = onClick,
             modifier = Modifier.size(80.dp),
             shape = CircleShape,
             contentColor = Color.White,
             containerColor = getColor(btn)
             ) {
-            Text(text = btn, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(text = btn, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
